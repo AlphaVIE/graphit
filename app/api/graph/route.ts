@@ -12,10 +12,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
     if (result.possible) {
       return NextResponse.json(result.graph);
     } else {
-      return NextResponse.json({ error: 'Graph not possible' }, { status: 400 });
+      return NextResponse.json({ error: 'Graph nicht möglich' }, { status: 400 });
     }
   } else {
     res.headers.set('Allow', 'POST');
-    return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
+    return NextResponse.json({ error: 'HTTP Methode ungültig' }, { status: 405 });
   }
 }

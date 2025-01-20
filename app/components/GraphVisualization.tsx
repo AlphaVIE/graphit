@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react';
-import { DataSet, Network } from 'vis-network/standalone/esm/vis-network';
+import React, { useRef, useEffect } from "react";
+import { DataSet, Network } from "vis-network/standalone/esm/vis-network";
 
 interface NodeType {
   id: number;
@@ -25,16 +25,16 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({ graph }) => {
 
   useEffect(() => {
     if (containerRef.current && graph) {
-      // Konvertiere Knoten und Kanten in vis-kompatibles Format
       const visNodes = new DataSet(
         graph.nodes.map((node) => ({
           id: node.id,
-          label: `Node ${node.id}\nGrad: ${node.groupDegree}`,
+          label: `Grad: ${node.groupDegree}`,
         }))
       );
 
       const visEdges = new DataSet(
-        graph.edges.map((edge) => ({
+        graph.edges.map((edge, index) => ({
+          id: index,
           from: edge.from,
           to: edge.to,
         }))
@@ -48,15 +48,17 @@ const GraphVisualization: React.FC<GraphVisualizationProps> = ({ graph }) => {
       const options = {
         edges: {
           smooth: {
-            type: 'continuous'
-          }
+            enabled: true,
+            type: "continuous",
+            roundness: 0.5,
+          },
         },
         physics: {
-          stabilization: false
+          stabilization: false,
         },
         layout: {
-          improvedLayout: true
-        }
+          improvedLayout: true,
+        },
       };
 
       // Initialisiere das Netzwerk
